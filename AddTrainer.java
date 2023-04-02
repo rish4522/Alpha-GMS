@@ -118,7 +118,7 @@ public class AddTrainer extends JFrame implements ActionListener {
         cancelButton.setBackground(Color.RED);
         add(cancelButton);
 
-        ImageIcon backgroundImage = new ImageIcon("C:\\Users\\risha\\OneDrive\\Desktop\\GMS\\bgTrainer.png");
+        ImageIcon backgroundImage = new ImageIcon("bgTrainer.png");
         backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
         add(backgroundLabel);

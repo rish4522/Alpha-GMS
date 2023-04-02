@@ -209,7 +209,7 @@ public class HomePage extends JFrame {
         shopMenu.add(shopMenuItem);
 
         // set background image
-        ImageIcon backgroundIcon = new ImageIcon("C:\\Users\\risha\\OneDrive\\Desktop\\GMS\\bg1.jpg");
+        ImageIcon backgroundIcon = new ImageIcon("bg1.jpg");
         Image backgroundImage = backgroundIcon.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
         JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
         add(backgroundLabel, BorderLayout.CENTER);

@@ -1,60 +1,48 @@
+import java.util.ArrayList;
+
 public class EquipmentManager {
     private static ArrayList<Equipment> equipmentList = new ArrayList<Equipment>();
 
     public static void addEquipment(Equipment equipment) throws EquipmentException {
-        // Check if the equipment with same equipment ID already exists
-        for (Equipment existingEquipment : equipmentList) {
-            if (existingEquipment.getEquipmentId().equals(equipment.getEquipmentId())) {
-                throw new EquipmentException("Equipment with ID " + equipment.getEquipmentId() + " already exists");
+        // Check if equipment already exists in the list
+        for (Equipment e : equipmentList) {
+            if (e.getName().equalsIgnoreCase(equipment.getName())) {
+                // Equipment already exists, so throw an exception
+                throw new EquipmentException("Equipment already exists.");
             }
         }
 
+        // Add the equipment to the list
         equipmentList.add(equipment);
     }
 
-    public static Equipment getEquipmentById(String equipmentId) throws EquipmentException {
-        for (Equipment equipment : equipmentList) {
-            if (equipment.getEquipmentId().equals(equipmentId)) {
-                return equipment;
-            }
-        }
-
-        throw new EquipmentException("Equipment with ID " + equipmentId + " not found");
-    }
-
-    public static void updateEquipment(Equipment equipment) throws EquipmentException {
+    public static void editEquipment(Equipment equipment) throws EquipmentException {
         boolean found = false;
-
-        // Find the equipment with the same equipment ID and update its details
-        for (int i = 0; i < equipmentList.size(); i++) {
-            if (equipmentList.get(i).getEquipmentId().equals(equipment.getEquipmentId())) {
-                equipmentList.set(i, equipment);
+        for (Equipment e : equipmentList) {
+            if (e.getName().equalsIgnoreCase(equipment.getName())) {
+                e.setQuantity(equipment.getQuantity());
                 found = true;
                 break;
             }
         }
-
+    
         if (!found) {
-            throw new EquipmentException("Equipment with ID " + equipment.getEquipmentId() + " not found");
+            throw new EquipmentException("Equipment not found.");
         }
     }
-
-    public static boolean deleteEquipment(String equipmentId) throws EquipmentException {
-        boolean found = false;
-
-        // Find the equipment with the same equipment ID and remove it from the list
-        for (int i = 0; i < equipmentList.size(); i++) {
-            if (equipmentList.get(i).getEquipmentId().equals(equipmentId)) {
-                equipmentList.remove(i);
-                found = true;
-                break;
-            }
+    
+    public static void deleteEquipment(Equipment equipment) throws EquipmentException {
+        if (!equipmentList.remove(equipment)) {
+            throw new EquipmentException("Equipment not found.");
         }
+    }
+    
 
-        if (!found) {
-            throw new EquipmentException("Equipment with ID " + equipmentId + " not found");
-        }
+    public static ArrayList<Equipment> getEquipmentList() {
+        return equipmentList;
+    }
 
-        return true;
+    public static void setEquipmentList(ArrayList<Equipment> equipmentList) {
+        EquipmentManager.equipmentList = equipmentList;
     }
 }

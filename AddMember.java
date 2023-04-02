@@ -103,7 +103,7 @@ public class AddMember extends JFrame implements ActionListener {
         cancelButton.addActionListener(this);
         add(cancelButton);
 
-        ImageIcon backgroundImage = new ImageIcon("C:\\Users\\risha\\OneDrive\\Desktop\\GMS\\bgMember.jpg");
+        ImageIcon backgroundImage = new ImageIcon("bgMember.jpg");
         backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
         add(backgroundLabel);

@@ -3,24 +3,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddEquipment extends JFrame implements ActionListener {
+public class EditEquipment extends JFrame implements ActionListener {
     private JLabel titleLabel, equipmentNameLabel, quantityLabel;
     private JTextField equipmentNameTextField, quantityTextField;
-    private JButton addButton, cancelButton;
+    private JButton saveButton, cancelButton;
+    private Equipment equipment;
 
-    public AddEquipment() {
-        super("Add Equipment");
+    public EditEquipment(Equipment equipment) {
+        super("Edit Equipment");
+        this.equipment = equipment;
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Create components
-        titleLabel = new JLabel("Add Equipment", JLabel.CENTER);
+        titleLabel = new JLabel("Edit Equipment", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         equipmentNameLabel = new JLabel("Equipment Name:", JLabel.RIGHT);
         quantityLabel = new JLabel("Quantity:", JLabel.RIGHT);
-        equipmentNameTextField = new JTextField();
-        quantityTextField = new JTextField();
-        addButton = new JButton("Add");
+        equipmentNameTextField = new JTextField(equipment.getName());
+        quantityTextField = new JTextField(Integer.toString(equipment.getQuantity()));
+        saveButton = new JButton("Save");
         cancelButton = new JButton("Cancel");
 
         // Add components to panels
@@ -32,7 +34,7 @@ public class AddEquipment extends JFrame implements ActionListener {
         inputPanel.add(quantityTextField);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.add(addButton);
+        buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
 
         // Add panels to frame
@@ -41,7 +43,7 @@ public class AddEquipment extends JFrame implements ActionListener {
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Add action listeners
-        addButton.addActionListener(this);
+        saveButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
         // Set frame size and visibility
@@ -51,35 +53,36 @@ public class AddEquipment extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addButton) {
+        if (e.getSource() == saveButton) {
             String equipmentName = equipmentNameTextField.getText().trim();
             String quantityString = quantityTextField.getText().trim();
-    
+
             // Check if the quantity field is empty
             if (quantityString.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a quantity.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-    
+
             int quantity = Integer.parseInt(quantityString);
-    
+
             try {
-                // Add the equipment
-                EquipmentManager.addEquipment(new Equipment(equipmentName, quantity));
-    
+                // Edit the equipment
+                equipment.setName(equipmentName);
+                equipment.setQuantity(quantity);
+                EquipmentManager.editEquipment(equipment);
+
                 // Show success message
-                JOptionPane.showMessageDialog(this, "Equipment added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-    
-                // Clear the input fields
-                equipmentNameTextField.setText("");
-                quantityTextField.setText("");
+                JOptionPane.showMessageDialog(this, "Equipment edited successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                // Close the edit equipment dialog
+                dispose();
             } catch (EquipmentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == cancelButton) {
+            // Close the edit equipment dialog
             dispose();
-            new HomePage();
         }
     }
-    
+
 }

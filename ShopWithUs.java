@@ -13,11 +13,15 @@ public class ShopWithUs extends JFrame {
 
     public ShopWithUs() {
         super("Shop With Us");
-
         productsList = new ArrayList<>();
 
         // create and set layout
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(5, 5, 5, 5);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_START;
         add(panel);
 
         // create UI components
@@ -33,27 +37,28 @@ public class ShopWithUs extends JFrame {
         deleteButton = new JButton("Delete Product");
 
         // add components to panel
-        panel.add(productNameLabel);
-        panel.add(productNameTextField);
-        panel.add(priceLabel);
-        panel.add(priceTextField);
-        panel.add(quantityLabel);
-        panel.add(quantityTextField);
-        panel.add(addButton);
-        panel.add(viewButton);
-        panel.add(editButton);
-        panel.add(deleteButton);
-
-        JFrame parentComponent = new JFrame();
-
-        Component comp = new JButton("Click me");
-        if (comp != null && comp.getParent() != null) {
-            comp.getParent().remove(comp);
-        }
-
-            if (comp != null) {
-            parentComponent.add(comp);
-        }
+        panel.add(productNameLabel, c);
+        c.gridx++;
+        panel.add(productNameTextField, c);
+        c.gridx = 0;
+        c.gridy++;
+        panel.add(priceLabel, c);
+        c.gridx++;
+        panel.add(priceTextField, c);
+        c.gridx = 0;
+        c.gridy++;
+        panel.add(quantityLabel, c);
+        c.gridx++;
+        panel.add(quantityTextField, c);
+        c.gridx = 0;
+        c.gridy++;
+        panel.add(addButton, c);
+        c.gridx++;
+        panel.add(viewButton, c);
+        c.gridx++;
+        panel.add(editButton, c);
+        c.gridx++;
+        panel.add(deleteButton, c);
 
         // add action listeners
         addButton.addActionListener(new AddButtonListener());
@@ -62,7 +67,7 @@ public class ShopWithUs extends JFrame {
         deleteButton.addActionListener(new DeleteButtonListener());
 
         // set JFrame properties
-        setSize(500, 200);
+        setSize(600, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -92,19 +97,19 @@ public class ShopWithUs extends JFrame {
         }
     }
 
-    // ActionListener for View Products button
-    private class ViewButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                // create text area and display product list
-                JTextArea productsTextArea = new JTextArea();
-                for (String product : productsList) {
-                    productsTextArea.append(product + "\n");
-                }
+        // ActionListener for View Products button
+        private class ViewButtonListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    // create text area and display product list
+                    JTextArea productsTextArea = new JTextArea();
+                    for (String product : productsList) {
+                        productsTextArea.append(product + "\n");
+                    }
 
-                JOptionPane.showMessageDialog(null, new JScrollPane(productsTextArea), "Products on Sale", JOptionPane.PLAIN_MESSAGE);
-            } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, new JScrollPane(productsTextArea), "Products on Sale", JOptionPane.PLAIN_MESSAGE);
+                } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -137,14 +142,42 @@ private class EditButtonListener implements ActionListener {
         try {
             // display input dialog box to get product to edit
             String[] productsArray = productsList.toArray(new String[0]);
-            String selectedProduct = (String) JOptionPane.showInputDialog(null, "Select a product to edit:", "Edit Product", JOptionPane.PLAIN_MESSAGE, null, productsArray, productsArray[0]);
+            String selectedProduct = (String) JOptionPane.showInputDialog(
+                    null, 
+                    "Select a product to edit:", 
+                    "Edit Product", 
+                    JOptionPane.PLAIN_MESSAGE, 
+                    null, 
+                    productsArray, 
+                    productsArray[0]);
 
             if (selectedProduct != null) {
                 // display input dialog box to get new product details
                 String[] selectedProductDetails = selectedProduct.split(" - ");
-                String newProductName = (String) JOptionPane.showInputDialog(null, "Enter new product name:", "Edit Product", JOptionPane.PLAIN_MESSAGE, null, null, selectedProductDetails[0]);
-                String newPrice = (String) JOptionPane.showInputDialog(null, "Enter new price:", "Edit Product", JOptionPane.PLAIN_MESSAGE, null, null, selectedProductDetails[1].substring(8));
-                String newQuantity = (String) JOptionPane.showInputDialog(null, "Enter new quantity:", "Edit Product", JOptionPane.PLAIN_MESSAGE, null, null, selectedProductDetails[2].substring(11));
+                String newProductName = (String) JOptionPane.showInputDialog(
+                        null, 
+                        "Enter new product name:", 
+                        "Edit Product", 
+                        JOptionPane.PLAIN_MESSAGE, 
+                        null, 
+                        null, 
+                        selectedProductDetails[0]);
+                String newPrice = (String) JOptionPane.showInputDialog(
+                        null, 
+                        "Enter new price:", 
+                        "Edit Product", 
+                        JOptionPane.PLAIN_MESSAGE, 
+                        null, 
+                        null, 
+                        selectedProductDetails[1].substring(8));
+                String newQuantity = (String) JOptionPane.showInputDialog(
+                        null, 
+                        "Enter new quantity:", 
+                        "Edit Product", 
+                        JOptionPane.PLAIN_MESSAGE, 
+                        null, 
+                        null, 
+                        selectedProductDetails[2].substring(11));
 
                 // update selected product in productsList
                 productsList.set(productsList.indexOf(selectedProduct), newProductName + " - Price: " + newPrice + " - Quantity: " + newQuantity);
@@ -156,6 +189,7 @@ private class EditButtonListener implements ActionListener {
     }
 }
 
-
-
+public static void main(String[] args) {
+    new ShopWithUs();
+}
 }

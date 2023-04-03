@@ -154,14 +154,14 @@ public class HomePage extends JFrame {
         });
         trainerMenu.add(viewTrainerItem);
 
-        JMenuItem addScheduleItem = new JMenuItem("Add Schedule");
-        addScheduleItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            AddSchedule addSchedule = new AddSchedule();
-            addSchedule.setVisible(true);
-            }
-        });
-        scheduleMenu.add(addScheduleItem);
+        // JMenuItem addScheduleItem = new JMenuItem("Add Schedule");
+        // addScheduleItem.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //     AddSchedule addSchedule = new AddSchedule();
+        //     addSchedule.setVisible(true);
+        //     }
+        // });
+        // scheduleMenu.add(addScheduleItem);
 
         JMenuItem viewScheduleItem = new JMenuItem("View Schedule");
         viewScheduleItem.addActionListener(new ActionListener() {
